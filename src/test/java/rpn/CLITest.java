@@ -67,6 +67,21 @@ public class CLITest {
         assertThat(evaluate("48 3 5 + /")).isEqualTo(6);
     }
 
+    @Test
+    public void should_evaluate_addition_with_float() {
+        assertThat(evaluate("5.3 4.7 +")).isEqualTo(10);
+    }
+
+    @Test
+    public void should_evaluate_multiplication_with_float() {
+        assertThat(evaluate("2.2 2.5 *")).isEqualTo(5.5);
+    }
+
+    @Test
+    public void should_evaluate_division_with_float() {
+        assertThat(evaluate("1.5 2.5 /")).isEqualTo(0.6);
+    }
+
 
 
     @Test(expected = ArithmeticException.class)

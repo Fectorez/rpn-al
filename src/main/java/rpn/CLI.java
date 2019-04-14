@@ -8,11 +8,12 @@ public class CLI {
         String expression = Stream.of(args).collect(Collectors.joining(" "));
 
         System.out.println("About to evaluate '" + expression + "'");
-        long result = evaluate(expression);
+        double result = evaluate(expression);
         System.out.println("> " + result);
+        System.out.println(((double)(10))/((double)0));
     }
 
-    static long evaluate(String expression) {
+    static double evaluate(String expression) {
         RPN rpn = new RPN();
         return rpn.compute(expression);
     }

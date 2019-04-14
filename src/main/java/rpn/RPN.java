@@ -12,11 +12,10 @@ public class RPN {
 
     public RPN() {}
 
-    public long compute(String expression) {
-        String[] values = expression.split("\\s+");
+    public double compute(String expression) {
         Stack<String> stack = new Stack<>();
 
-        for ( String value : values ) {
+        for ( String value : expression.split("\\s+") ) {
             if ( isNumeric(value) ) {
                 stack.push(value);
             }
@@ -27,23 +26,23 @@ public class RPN {
                     stack.push(operation(topValue1, topValue2, value));
                 }
                 else {
-                    throw new RuntimeException(String.format("Operator \"{}\" not expected here.", value));
+                    throw new RuntimeException(String.format("Operator \"%s\" not expected here.", value));
                 }
             }
             else {
-                throw new RuntimeException(String.format("({}) Value must be a number or an operator.", value));
+                throw new RuntimeException(String.format("Value \"%s\" not recognized. Value must be a number or an operator in %s", value, Arrays.toString(OPERATORS)));
             }
         }
 
         if ( stack.size() > 1 ) {
-            throw new RuntimeException(String.format("Too much values in the expression.", stack));
+            throw new RuntimeException(String.format("Some values cannot be computed. Remaining stack: %s", stack.toString()));
         }
 
-        return Long.valueOf(stack.pop());
+        return Double.valueOf(stack.pop());
     }
 
     private static boolean isNumeric(String str) {
-        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+        return str.matches("-?\\d+(\\.\\d+)?");
     }
 
     private static boolean isOperator(String str) {
@@ -59,8 +58,8 @@ public class RPN {
      * exemple: operation("5", "3", "-") returns "2"
      */
     private static String operation(String val1, String val2, String op){
-        long a = Long.valueOf(val2);
-        long b = Long.valueOf(val1);
+        double a = Double.valueOf(val2);
+        double b = Double.valueOf(val1);
 
         switch ( op ) {
             case ADD:
@@ -70,6 +69,8 @@ public class RPN {
             case MUL:
                 return String.valueOf(a * b);
             case DIV:
+                if ( b == 0.0 )
+                    throw new ArithmeticException("Division by 0");
                 return String.valueOf(a / b);
         }
 
