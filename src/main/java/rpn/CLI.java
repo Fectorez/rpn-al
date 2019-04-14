@@ -10,7 +10,6 @@ public class CLI {
         System.out.println("About to evaluate '" + expression + "'");
         double result = evaluate(expression);
         System.out.println("> " + result);
-        System.out.println(((double)(10))/((double)0));
     }
 
     static double evaluate(String expression) {
